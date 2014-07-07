@@ -6,16 +6,30 @@
         <title>Search Autocomplete JS</title>
         <meta name="description" content="Autocomplete your search term as your type, displaying a list of possible matches below">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="shortcut icon" type="image/png" href="jasmine/lib/jasmine-2.0.0/jasmine_favicon.png">
+        <link rel="stylesheet" type="text/css" href="jasmine/lib/jasmine-2.0.0/jasmine.css">
     </head>
     <body>
         <!--[if lt IE 8]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
 
-        <!-- Add your site or application content here -->
-        <p>Hello world! This is HTML5 Boilerplate.</p>
+        <div class="search-form">
+            <form action="#" method="#">
+                <input type="text" name="search_term" autofocus placeholder="Enter search term">
+                <ul class="results">
+                </ul>
+            </form>
+        </div>
 
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.1.min.js"><\/script>')</script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <!--script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.1.min.js"><\/script>')</script-->
+
+        <script type="text/javascript" src="jasmine/lib/jasmine-2.0.0/jasmine.js"></script>
+        <script type="text/javascript" src="jasmine/lib/jasmine-2.0.0/jasmine-html.js"></script>
+        <script type="text/javascript" src="jasmine/lib/jasmine-2.0.0/boot.js"></script>
+
+        <script src="main.js"></script>
     </body>
 </html>
