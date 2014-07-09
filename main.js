@@ -45,18 +45,43 @@ $(function(){
         }
     };
 
-    function compare_search_term_to_result_set_name(input_val, key){
-        // Compare search term to each result set name, e.g. 123456789ABC
+    function check_key_event(key_event){
+        // Early exit if key event is not alphanumeric or backspace
 
-        console.log('Input val -> ' + input_val);
-
-        if (key.toLowerCase().indexOf(input_val.toLowerCase()) >= 0){
-            $('.results').append($('<li class="match">').append(key));
+        if (!(key_event > 47 && key_event < 58 || key_event > 64 && key_event < 92 || key_event == 8 || key_event === undefined )) { 
+            return false;
         }
+        return true;
     }
 
-    function compare_search_term_to_result_set_values(input_val, value){
-        // Compare search term to each result set name, e.g. 123456789ABC
+    function append_to_results(element, tag, tag2, key, value){
+        // Append list item to results list
+
+        var record = String(key);
+
+        jQuery.each(value, function(key, value){
+            record += (' ' + value);
+        });
+
+        $(element).append($(tag).append($(tag2).append(record)));
+    }
+
+    function compare_search_term_to_data_set(input_val, key, value){
+        // Compare search term to result set key name and value
+
+        var match = false;
+
+        match = (key.toLowerCase().indexOf(input_val.toLowerCase()) >= 0) ? true : false;
+
+        jQuery.each(value, function(key, value){
+            if (value.toLowerCase().indexOf(input_val.toLowerCase()) >= 0){
+                match = true;
+            }
+        });
+
+        if (match){
+            append_to_results('.results', '<tr class="match">','<td>', key, value);
+        }
     }
 
     function search_autocomplete(){
@@ -64,12 +89,11 @@ $(function(){
 
         var key_event = event.which;
         var input_val = $(this).val();
-        var regx = /^[A-Za-z0-9]+$/;
-        
+
         console.log(key_event);
         
-        if (!(key_event > 47 && key_event < 58 || key_event > 64 && key_event < 91 || key_event == 8)) { 
-            // Early exit if key event is not alphanumeric or backspace
+        // If key pressed is not alphanumeric or backspace, early exit
+        if (!check_key_event(key_event)) {
             return false;
         }
 
@@ -77,13 +101,11 @@ $(function(){
         $('.match').remove();
 
         jQuery.each(vehicles, function(key, value){
-            // Compare the search term to the result set name, then every value of each result set
 
             // Compare search term to result set name
-            compare_search_term_to_result_set_name(input_val, key);
-
-            // Compare search term to result set values
-            compare_search_term_to_result_set_values(input_val, value);
+            if (input_val){
+                var match = compare_search_term_to_data_set(input_val, key, value); 
+            }
         });
     }
 
@@ -96,7 +118,6 @@ $(function(){
        - Begin with no results
        - As the user types, display a list of matches below the line in real time
 */
-
 
 /*//--- SPECS -------------------------
 describe("Live Search", function() {
